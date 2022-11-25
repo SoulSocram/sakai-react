@@ -8,14 +8,22 @@ import { Password } from 'primereact/password';
 import { LayoutContext } from '../../../layout/context/layoutcontext';
 import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
+import { Dropdown } from 'primereact/dropdown';
+
 
 const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [checked, setChecked] = useState(false);
+    const [loginValue, setLoginValue] = useState(null);
     const { layoutConfig } = useContext(LayoutContext);
     const contextPath = getConfig().publicRuntimeConfig.contextPath;
     const router = useRouter();
     const containerClassName = classNames('surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden', {'p-input-filled': layoutConfig.inputStyle === 'filled'});
+
+    const loginValues = [
+        { name: 'Representante', code: 'vendas' },
+        { name: 'Colaborador', code: 'emis' }
+    ];
 
     return (
         <div className={containerClassName}>
@@ -24,6 +32,12 @@ const LoginPage = () => {
                     <div className="w-full surface-card py-8 px-5 sm:px-8" style={{ borderRadius: '53px' }}>
                         <div className="flex align-items-center justify-content-center mb-5">
                             <img src={`${contextPath}/layout/images/logoVerticalEmis-${layoutConfig.colorScheme === 'light' ? 'dark' : 'white'}.png`} alt="Sakai logo" className="mb-5 w-9rem flex-shrink-0"/>
+                        </div>
+                        <div>
+                            <label htmlFor="email1" className="block text-900 text-xl font-medium mb-2">
+                                Acesso
+                            </label>
+                            <Dropdown className='w-full md:w-30rem mb-5' value={loginValue} onChange={(e) => setLoginValue(e.value)} options={loginValues} optionLabel="name" placeholder="Select" />
                         </div>
                         <div>
                             <label htmlFor="email1" className="block text-900 text-xl font-medium mb-2">
